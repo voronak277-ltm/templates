@@ -1,46 +1,46 @@
 #include <iostream>
-
+#include <string>
+#include <algorithm>
 using namespace std;
 
+// Interface
 class Service {
 public:
     virtual ~Service() = default;
 
     virtual string Request() const {
-    return "Service: The default service's behavior.";
+        return "Service: The default service's behavior.";
     }
 };
 
+// Service
 class Adaptee {
 public:
     string SpecificRequest() const {
-    return ".eetpadA eht fo roivaheb laicepS";
+        return ".eetpadA eht fo roivaheb laicepS";
     }
 };
 
 class Adapter : public Service {
 private:
-  Adaptee *adaptee_;
+    Adaptee *adaptee_;
 
 public:
     Adapter(Adaptee *adaptee) : adaptee_(adaptee) {}
     
     string Request() const override {
-    string to_reverse = this->adaptee_->SpecificRequest();
-    reverse(to_reverse.begin(), to_reverse.end());
-    return "Adapter: (TRANSLATED) " + to_reverse;
-  }
+        string to_reverse = adaptee_->SpecificRequest();
+        reverse(to_reverse.begin(), to_reverse.end());
+        return "Adapter: (TRANSLATED) " + to_reverse;
+    }
 };
 
-void ClientCode(const Service *service) {
-    cout << service->Request();
-};
 
 int main() {
     cout << "Client: I can work just fine with the Target objects:\n";
     Service *service = new Service;
-    
-    ClientCode(service);
+    cout << service->Request();
+
     cout << "\n\n";
     Adaptee *adaptee = new Adaptee;
     cout << "Client: The Adaptee class has a weird interface. See, I don't understand it:\n";
@@ -57,4 +57,4 @@ int main() {
     delete adapter;
 
     return 0;
-}
+} 
